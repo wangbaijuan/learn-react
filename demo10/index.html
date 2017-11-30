@@ -9,37 +9,51 @@
   <body>
     <div id="example"></div>
     <script type="text/babel">
-      var Hello = React.createClass({
-        getInitialState: function () {
-          return {
-            opacity: 1.0
+
+
+
+      class Hello extends React.Component {
+
+          constructor(props) {
+              super(props);
+          }
+
+          state = {
+              opacity: 1.0
           };
-        },
 
-        componentDidMount: function () {
-          this.timer = setInterval(function () {
-            var opacity = this.state.opacity;
-            opacity -= .05;
-            if (opacity < 0.1) {
-              opacity = 1.0;
-            }
-            this.setState({
-              opacity: opacity
-            });
-          }.bind(this), 100);
-        },
+//          props = {
+//              name:"world!"
+//          }
 
-        render: function () {
-          return (
-            <div style={{opacity: this.state.opacity}}>
-              Hello {this.props.name}
-            </div>
-          );
-        }
-      });
+          componentDidMount(){
+              console.log(2);
+              setInterval(() => {
+                  this.setState(prevState => {
+                      let prevOpaCity = prevState.opacity;
+                      prevOpaCity -= 0.05;
+                      if (prevOpaCity < 0.1) {
+                          prevOpaCity = 1.0;
+                      }
+                      return ({
+                          opacity: prevOpaCity
+                      })
+                  });
+              }, 100)
+          }
+
+          render() {
+              console.log(1);
+              return (
+                  <div style={ {opacity: this.state.opacity, color: 'blue'} }>
+                    Hello {this.props.name}
+                  </div>
+              )
+          }
+      }
 
       ReactDOM.render(
-        <Hello name="world"/>,
+        <Hello/>,
         document.getElementById('example')
       );
     </script>

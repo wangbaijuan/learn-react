@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/babel">
+
+        const getJson = (url) => {
+            const promise = new Promise((resolve, reject) => {
+
+                const handler = () => {
+                    if (client.readyState !== 4) { // 成功完成
+                       return ;
+                    }
+                    if (client.status === 200) {
+                        resolve(client.response);
+                    } else {
+                        reject(new Error(client.statusText));
+                    }
+                }
+
+
+                const client = new XMLHttpRequest(); // 新建XMLHttpRequest对象
+                client.open("GET", url);
+                client.onreadystatechange = handler;
+                client.responseType = "json";
+                client.setRequestHeader("Accept", "application/json");
+                client.send();
+
+            });
+
+            return promise;
+        }
+        // 发送请求:
+        getJson('http://192.168.130.101:28093/app-rest/health1')
+            .then(json => {
+//                console.log("success:", json);
+//                return JSON.parse(json);
+                return JSON.stringify(json);
+//                console.log(jsonStr);
+//                console.log(json.message);
+            }, error => {
+                console.error("fail:", error);
+            })
+            .then(jsonStr => {
+                console.log(JSON.parse(jsonStr));
+            })
+            .catch( e => {
+                console.log("ex:", e);
+            });
+    </script>
+</body>
+</html>

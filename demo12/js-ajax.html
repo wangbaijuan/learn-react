@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function success(text) {
+            console.log("success", text)
+        }
+
+        function fail(code) {
+            console.log("fail", code)
+        }
+
+        var request = new XMLHttpRequest(); // 新建XMLHttpRequest对象
+
+        request.onreadystatechange = function () { // 状态发生变化时，函数被回调
+            if (request.readyState === 4) { // 成功完成
+                // 判断响应结果:
+                if (request.status === 200) {
+                    // 成功，通过responseText拿到响应的文本:
+                    return success(request.responseText);
+                } else {
+                    // 失败，根据响应码判断失败原因:
+                    return fail(request.status);
+                }
+            } else {
+                // HTTP请求还在继续...
+            }
+        }
+
+        // 发送请求:
+        request.open('GET', 'http://192.168.130.101:28093/app-rest/health');
+        request.send();
+
+        console.log('请求已发送，请等待响应...');
+    </script>
+</body>
+</html>
