@@ -1,29 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="../build/react.js"></script>
-    <script src="../build/react-dom.js"></script>
-    <script src="../build/browser.min.js"></script>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script src="../lib/babel.min.js"></script>
   </head>
   <body>
     <div id="example"></div>
     <script type="text/babel">
-var LikeButton = React.createClass({
-  getInitialState: function() {
-    return {liked: false};
-  },
-  handleClick: function(event) {
-    this.setState({liked: !this.state.liked});
-  },
-  render: function() {
-    var text = this.state.liked ? 'like' : 'haven\'t liked';
+// var LikeButton = React.createClass({
+//   getInitialState: function() {
+//     return {liked: false};
+//   },
+//   handleClick: function(event) {
+//     this.setState({liked: !this.state.liked});
+//   },
+//   render: function() {
+//     var text = this.state.liked ? 'like' : 'haven\'t liked';
+//     return (
+//       <p onClick={this.handleClick}>
+//         You {text} this. Click to toggle.
+//       </p>
+//     );
+//   }
+// });
+
+class LikeButton extends React.Component {
+
+  state = {
+    linked: false
+  };
+
+  handleClick = (e) => {
+    console.log("click");
+    this.setState(prevState =>({
+      linked: !prevState.linked
+    }))
+  }
+
+  render() {
+    console.log(this.state.linked)
+    var text = this.state.linked ? 'like' : "haven't liked";
     return (
       <p onClick={this.handleClick}>
         You {text} this. Click to toggle.
       </p>
-    );
+    )
   }
-});
+}
 
 ReactDOM.render(
   <LikeButton />,
