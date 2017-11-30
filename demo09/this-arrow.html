@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/babel.min.js"></script>
+</head>
+<body>
+
+<button id="click">点击</button>
+
+<script type="text/babel">
+
+
+    const hello = () => {
+        console.log("hello", this);// undefined
+        const world = (shaonian) => {
+            console.log("world, " + shaonian, this)// undefined
+        }
+        world("shaonian");// undefined
+        world.call(this, "shaonian");// undefined
+        return this;// undefined
+    }
+
+    let btn = document.getElementById("click");
+    btn.onclick = hello.bind(btn);
+</script>
+</body>
+</html>

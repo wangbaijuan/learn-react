@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button id="click">点击</button>
+
+<script>
+    document.getElementById("click").onclick = hello;
+
+    var user = {
+        name:function () {
+            console.log(this)
+            return this;
+        }
+    }
+    function hello() {
+
+        console.log("hello", this);// btn
+
+        console.log(user.name() === user);// user obj: true
+        user.name.call(this);// btn
+
+        return this;
+    }
+
+</script>
+</body>
+</html>
