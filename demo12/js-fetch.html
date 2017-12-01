@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/babel">
+
+        // base
+
+//        fetch("/data.json")
+//            .then(function(res) {
+//                // res instanceof Response == true.
+//                if (res.ok) {
+//                    res.json().then(function(data) {
+//                        console.log(data.entries);
+//                    });
+//                } else {
+//                    console.log("Looks like the response wasn't perfect, got status", res.status);
+//                }
+//            }, function(e) {
+//                console.log("Fetch failed!", e);
+//            })
+//            .catch(function () {
+//            });
+
+
+        fetch("http://192.168.130.102:28093/app-rest/health")
+            .then(function(response) {
+
+                if(response.ok) {
+                    return response.json();
+                }
+                else {
+                    console.log('Network response was not ok.');// 404 http://192.168.130.101:28093/app-rest/health1
+                }
+            }
+//            ,//not must, error will catch in catch statement
+//            function (error) {
+//                console.log('error:' + error); //网络问题 1
+//            }
+            )
+            .then(function (json) {
+                console.log(json.message);
+            })
+            .catch(function(error) {
+                    console.log('There has been a problem with your fetch operation: ' + error.message);// 网络问题：例如访问　http://192.168.130.102:28093/app-rest/health1
+            });
+    </script>
+</body>
+</html>
