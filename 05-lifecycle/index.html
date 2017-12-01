@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script src="../lib/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+
+
+
+      class Hello extends React.Component {
+
+          constructor(props) {
+              console.log("constructor..........") // 1
+              super(props);
+          }
+
+          state = {
+              opacity: 1.0
+          };
+
+          componentWillMount() {
+              console.log("will mount"); //2
+          }
+
+          componentDidMount(){
+              console.log("did mount");
+              setInterval(() => {
+                  console.log("did mount set state...")
+                  this.setState(prevState => {
+                      let prevOpaCity = prevState.opacity;
+                      prevOpaCity -= 0.05;
+                      if (prevOpaCity < 0.1) {
+                          prevOpaCity = 1.0;
+                      }
+                      return ({
+                          opacity: prevOpaCity
+                      })
+                  });
+              }, 100)
+          }
+
+          componentWillUpdate(nextProps, nextState) {
+              console.log("will update", nextProps, nextState)
+          }
+
+          componentDidUpdate(prevProps, prevState){
+              console.log("did update", prevProps, prevState)
+          }
+
+          componentWillUnmount(){
+              console.log("will unmount");
+          }
+
+
+          render() {
+              console.log("render...........");
+              return (
+                  <div style={ {opacity: this.state.opacity, color: 'blue'} }>
+                    Hello {this.props.name}
+                  </div>
+              )
+          }
+      }
+
+      ReactDOM.render(
+        <Hello/>,
+        document.getElementById('example')
+      );
+
+      /**
+       constructor..........
+       Inline Babel script:21 will mount
+       Inline Babel script:55 render...........
+       Inline Babel script:25 did mount
+       Inline Babel script:27 did mount set state...
+       Inline Babel script:42 will update Object {} Object {opacity: 0.95}
+       Inline Babel script:55 render...........
+       Inline Babel script:46 did update Object {} Object {opacity: 1}
+       Inline Babel script:27 did mount set state...
+       Inline Babel script:42 will update Object {} Object {opacity: 0.8999999999999999}
+       Inline Babel script:55 render...........
+       Inline Babel script:46 did update Object {} Object {opacity: 0.95}
+       Inline Babel script:27 did mount set state...
+       Inline Babel script:42 will update Object {} Object {opacity: 0.8499999999999999}
+       Inline Babel script:55 render...........
+       */
+    </script>
+  </body>
+</html>

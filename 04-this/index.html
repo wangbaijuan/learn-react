@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--<script src="../build/react.js"></script>-->
+    <!--<script src="../build/react-dom.js"></script>-->
+    <!--<script src="../build/browser.min.js"></script>-->
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script src="../lib/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example">
+
+
+    </div>
+    <input type="text" id="shaonian"/>
+    <script type="text/babel">
+//      var Input = React.createClass({
+//        getInitialState: function() {
+//          return {value: 'Hello!'};
+//        },
+//        handleChange: function(event) {
+//          this.setState({value: event.target.value});
+//        },
+//        render: function () {
+//          var value = this.state.value;
+//          return (
+//            <div>
+//              <input type="text" value={value} onChange={this.handleChange} />
+//              <p>{value}</p>
+//            </div>
+//          );
+//        }
+//      });
+
+      class Input extends React.Component {
+
+          state = {
+              value: "hello",
+          };
+
+          handleChange = (e) => {
+
+              console.log("=>", this);//Input object：　在作用连中查找 this
+              this.setState({
+                  value: e.target.value
+              });
+          }
+
+          handleChange1(e) {
+              console.log("func()", this);// 严格模式下 this === undefined
+              this.setState({
+                  value: e.target.value
+              });
+          }
+
+          handleChange2 = function() {
+              console.log("func2()", this);// 严格模式下 this === undefined
+          }
+
+          render() {
+              let value = this.state.value;
+              return (
+                  <div>
+                    function1(): <input type="text" value={value} onChange={this.handleChange1}/> <br/>
+                    function2(): <input type="text" value={value} onChange={this.handleChange2}/> <br/>
+                    ()=>: <input type="text" value={value} onChange={this.handleChange}/>
+                    <p>{value}</p>
+                  </div>
+              )
+          }
+      }
+
+      ReactDOM.render(<Input/>, document.getElementById('example'));
+    </script>
+  </body>
+</html>

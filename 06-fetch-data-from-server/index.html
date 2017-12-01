@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/jquery.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+
+
+      class RepoList extends React.Component {
+          state={
+              loading: true,
+              error:null,
+              data:null
+          };
+
+          componentDidMount() {
+              fetch(this.props.url)
+                  .then(response => {
+                      if(response.ok) {
+                          response.json().then(data => this.setState({
+                              loading:false,
+                              data: data
+                          }))
+                      }
+                      else {
+                          this.setState({
+                              loading: false,
+                              error: response
+                          })
+                      }
+                  })
+                  .catch(error => this.setState({
+                      loading:false,
+                      error: error
+                  }));
+          }
+
+
+          render() {
+              if (this.state.loading) {
+                  return <span>Loading...</span>;
+              }
+              else if (this.state.error !== null) {
+                  return <span>Error: {this.state.error.message}</span>;
+              }
+              else {
+                  console.log(this.state.data)
+                  var repos = this.state.data.items;
+                  var repoList = repos.map(function (repo, index) {
+                      return (
+                              <li key={index}><a href={repo.html_url}>{repo.name}</a> ({repo.stargazers_count} stars) <br/> {repo.description}</li>
+                      );
+                  });
+                  return (
+                          <main>
+                            <h1>Most Popular JavaScript Projects in Github</h1>
+                            <ol>{repoList}</ol>
+                          </main>
+                  );
+              }
+          }
+      }
+
+      ReactDOM.render(
+        <RepoList url="https://api.github.com/search/repositories?q=javascript&sort=stars"/>,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

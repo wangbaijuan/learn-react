@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var user = {
+        name:function () {
+            return this;
+        }
+    }
+    function hello() {
+
+
+        console.log(user.name() === user);// nested function this:  user
+
+        console.log(user.name.call(this) === window);// window
+
+        return this;
+    }
+
+    console.log(hello() === window);
+
+//    "use strict";
+//    var user = {
+//        name:function () {
+//            return this;
+//        }
+//    }
+//    function hello() {
+//
+//
+//        console.log(user.name() === user);// nested function this:  user
+//
+//        console.log(user.name.call(this) === undefined);// undefined
+//
+//        return this;
+//    }
+//
+//    console.log(hello() === undefined);
+
+</script>
+</body>
+</html>

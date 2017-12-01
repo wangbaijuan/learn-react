@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script src="../lib/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+
+      class NotesList extends React.Component{
+        render(){
+          let childrens = this.props.children;// undefined or object
+          return (
+            <ol>
+              {
+                  React.Children.map(this.props.children, (data, index) => (<li key={index}>{data}</li>))
+              }
+            </ol>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <NotesList>
+          <span>hello</span>
+          <span>world</span>
+        </NotesList>,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
+

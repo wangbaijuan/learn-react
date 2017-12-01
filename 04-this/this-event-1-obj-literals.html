@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button id="btn">点击</button>
+
+<script>
+
+    var element = document.getElementById('btn');
+
+    var user = {
+        firstname: 'Bob',
+        greeting: function(){
+            console.log(this)
+            alert('My name is ' + this.firstname);
+        }
+    };
+
+    // Attach user.greeting as a callback
+    element.addEventListener('click', user.greeting); // error
+
+    //this-base-3-nested-func.html
+    element.addEventListener('click', function() { // context inside an anonymouse function
+        console.log("anonymouse fun" + this);// btn
+        user.greeting();// nested function this is own this.
+    });
+    // Overwrite the original function with
+    // a new function with its execution
+    // context 'bound' to the user object
+    user.greeting = user.greeting.bind(user);
+
+    // Add the bound function as the callback
+    element.addEventListener('click', user.greeting);
+
+    // 1. event function this is event element.
+    // 2. use anonymouse fun or bind this create new func
+</script>
+</body>
+</html>

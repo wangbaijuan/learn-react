@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+</head>
+<body>
+
+    <script type="text/babel">
+        /******************* 1 ****************/
+        var obj = {
+            f:function() {
+                return this;// obj
+            }
+        }
+        console.log(obj.f() === obj); // true
+
+        /******************* 2 ****************/
+        var objStrict = {
+
+            f:function () {
+                'use strict'// objStrict
+                return this;
+            }
+        }
+        console.log(objStrict.f() === objStrict);// true
+
+        /******************* 3 ****************/
+        var objArrow = {
+            f: () => {
+                // inherit this from the context in which they're created.
+                return this;
+            }
+        }
+        console.log(objArrow.f())
+
+        // eq
+        var arrowObject = {};
+        arrowObject.name = 'arrowObject';
+        arrowObject.printName = () => {
+            console.log(this); // undefined
+        };
+        arrowObject.printName();
+
+        /******************* 4 ****************/
+
+        class ObjClass {
+
+            f() {
+                console.log(this)
+            }
+
+
+            f1 = () => {
+                console.log(this)
+            }
+
+        }
+
+        class ObjClass1{
+
+        }
+
+        new ObjClass().f();// ObjClass
+
+        new ObjClass().f1();// ObjClass
+
+        new ObjClass().f.bind(new ObjClass1())(); // ObjClass1
+        new ObjClass().f1.bind(new ObjClass1())();// ObjClass
+
+        // object literals: other function this is the object literals.
+        // object literals: arrow function this is undefined
+        // class: arrow function this is class object, can not be bind, defined -> this
+        // class: function() this can be bind , run -> this
+    </script>
+</body>
+</html>
